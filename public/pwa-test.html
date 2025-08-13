@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA 설치 진단 도구</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 10px;
+        }
+        .check-item {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 4px solid #ddd;
+            background: #fafafa;
+        }
+        .check-item.success {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+        .check-item.error {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        .check-item.warning {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+        .status {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .success .status { color: #10b981; }
+        .error .status { color: #ef4444; }
+        .warning .status { color: #f59e0b; }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        .install-button {
+            background: #10b981;
+        }
+        .install-button:hover {
+            background: #059669;
+        }
+        pre {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .section {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 PWA 설치 진단 도구</h1>
+        
+        <div class="section">
+            <h2>1. 기본 체크리스트</h2>
+            <div id="checks"></div>
+        </div>
+
+        <div class="section">
+            <h2>2. 설치 상태</h2>
+            <div id="install-status"></div>
+            <button id="install-btn" class="install-button" style="display:none;">
+                📱 앱 설치하기
+            </button>
+            <button id="clear-cache-btn">
+                🗑️ 캐시 초기화
+            </button>
+        </div>
+
+        <div class="section">
+            <h2>3. 리소스 체크</h2>
+            <button id="check-resources-btn">
+                🔍 리소스 검사 시작
+            </button>
+            <div id="resources"></div>
+        </div>
+
+        <div class="section">
+            <h2>4. 디버그 로그</h2>
+            <pre id="debug-log"></pre>
+        </div>
+    </div>
+
+    <script>
+        const log = [];
+        let deferredPrompt = null;
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+            log.push(logEntry);
+            document.getElementById('debug-log').textContent = log.join('\n');
+            console.log(logEntry);
+        }
+
+        function addCheck(id, label, status, message) {
+            const checksDiv = document.getElementById('checks');
+            const checkDiv = document.createElement('div');
+            checkDiv.className = `check-item ${status}`;
+            checkDiv.innerHTML = `
+                <span class="status">${status === 'success' ? '✅' : status === 'error' ? '❌' : '⚠️'}</span>
+                <strong>${label}:</strong> ${message}
+            `;
+            checksDiv.appendChild(checkDiv);
+        }
+
+        // 1. HTTPS 체크
+        function checkHTTPS() {
+            const isHTTPS = location.protocol === 'https:';
+            const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            
+            if (isHTTPS || isLocalhost) {
+                addCheck('https', 'HTTPS/Localhost', 'success', 
+                    isHTTPS ? 'HTTPS로 접속 중' : 'Localhost에서 실행 중');
+                addLog('HTTPS check passed');
+                return true;
+            } else {
+                addCheck('https', 'HTTPS', 'error', 
+                    'PWA는 HTTPS 또는 localhost에서만 작동합니다');
+                addLog('HTTPS check failed', 'error');
+                return false;
+            }
+        }
+
+        // 2. Service Worker 체크
+        async function checkServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    if (registrations.length > 0) {
+                        addCheck('sw', 'Service Worker', 'success', 
+                            `${registrations.length}개의 Service Worker가 등록됨`);
+                        addLog(`Found ${registrations.length} service worker(s)`);
+                        
+                        // Service Worker 상태 확인
+                        registrations.forEach((reg, index) => {
+                            addLog(`SW ${index}: ${reg.scope}, Active: ${reg.active ? 'Yes' : 'No'}`);
+                        });
+                        return true;
+                    } else {
+                        addCheck('sw', 'Service Worker', 'warning', 
+                            'Service Worker가 등록되지 않음');
+                        addLog('No service worker registered', 'warning');
+                        return false;
+                    }
+                } catch (error) {
+                    addCheck('sw', 'Service Worker', 'error', 
+                        `오류: ${error.message}`);
+                    addLog(`Service Worker error: ${error.message}`, 'error');
+                    return false;
+                }
+            } else {
+                addCheck('sw', 'Service Worker', 'error', 
+                    '브라우저가 Service Worker를 지원하지 않음');
+                addLog('Service Worker not supported', 'error');
+                return false;
+            }
+        }
+
+        // 3. Manifest 체크
+        async function checkManifest() {
+            const manifestLink = document.querySelector('link[rel="manifest"]');
+            if (manifestLink) {
+                try {
+                    const response = await fetch(manifestLink.href);
+                    if (response.ok) {
+                        const manifest = await response.json();
+                        addCheck('manifest', 'Manifest', 'success', 
+                            `manifest.json 로드 성공 (${manifest.name})`);
+                        addLog(`Manifest loaded: ${manifest.name}`);
+                        
+                        // 필수 필드 확인
+                        const required = ['name', 'short_name', 'icons', 'start_url', 'display'];
+                        const missing = required.filter(field => !manifest[field]);
+                        
+                        if (missing.length > 0) {
+                            addLog(`Missing manifest fields: ${missing.join(', ')}`, 'warning');
+                        }
+                        
+                        return true;
+                    } else {
+                        addCheck('manifest', 'Manifest', 'error', 
+                            `manifest.json 로드 실패 (${response.status})`);
+                        addLog(`Manifest load failed: ${response.status}`, 'error');
+                        return false;
+                    }
+                } catch (error) {
+                    addCheck('manifest', 'Manifest', 'error', 
+                        `오류: ${error.message}`);
+                    addLog(`Manifest error: ${error.message}`, 'error');
+                    return false;
+                }
+            } else {
+                addCheck('manifest', 'Manifest', 'error', 
+                    'manifest 링크가 없음');
+                addLog('No manifest link found', 'error');
+                return false;
+            }
+        }
+
+        // 4. 설치 상태 체크
+        function checkInstallStatus() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
+                || window.navigator.standalone 
+                || document.referrer.includes('android-app://');
+            
+            const statusDiv = document.getElementById('install-status');
+            
+            if (isStandalone) {
+                statusDiv.innerHTML = '<div class="check-item success"><strong>✅ 앱이 이미 설치되어 있습니다</strong></div>';
+                addLog('App is already installed');
+            } else {
+                statusDiv.innerHTML = '<div class="check-item warning"><strong>⚠️ 앱이 설치되지 않음 (브라우저 모드)</strong></div>';
+                addLog('App not installed (browser mode)');
+            }
+            
+            return isStandalone;
+        }
+
+        // 5. 리소스 체크
+        async function checkResources() {
+            const resourcesDiv = document.getElementById('resources');
+            resourcesDiv.innerHTML = '<p>검사 중...</p>';
+            
+            const iconSizes = ['16x16', '32x32', '72x72', '96x96', '128x128', 
+                              '144x144', '152x152', '192x192', '384x384', '512x512'];
+            
+            const results = [];
+            let errorCount = 0;
+            
+            // 밝은 테마 아이콘 체크
+            for (const size of iconSizes) {
+                const urls = [
+                    `/icons/coms_b-${size}.png`,
+                    `/icons/coms-d-${size}.png`,  // 다크 모드 (하이픈)
+                    `/icons/coms_d-${size}.png`    // 다크 모드 (언더스코어)
+                ];
+                
+                for (const url of urls) {
+                    try {
+                        const response = await fetch(url, { method: 'HEAD' });
+                        if (response.ok) {
+                            results.push(`✅ ${url}`);
+                            addLog(`Resource OK: ${url}`);
+                        } else {
+                            results.push(`❌ ${url} (${response.status})`);
+                            addLog(`Resource failed: ${url} (${response.status})`, 'error');
+                            errorCount++;
+                        }
+                    } catch (error) {
+                        results.push(`❌ ${url} (네트워크 오류)`);
+                        addLog(`Resource error: ${url}`, 'error');
+                        errorCount++;
+                    }
+                }
+            }
+            
+            resourcesDiv.innerHTML = `
+                <div class="check-item ${errorCount === 0 ? 'success' : 'error'}">
+                    <strong>아이콘 파일 체크:</strong> 
+                    ${errorCount === 0 ? '모든 파일 정상' : `${errorCount}개 파일 누락/오류`}
+                </div>
+                <details>
+                    <summary>상세 결과 보기</summary>
+                    <pre>${results.join('\n')}</pre>
+                </details>
+            `;
+        }
+
+        // 설치 프롬프트 처리
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-btn').style.display = 'block';
+            addLog('Install prompt captured and deferred');
+            
+            // 프롬프트가 표시되지 않은 이유 확인
+            if (e.platforms) {
+                addLog(`Supported platforms: ${e.platforms.join(', ')}`);
+            }
+        });
+
+        // 설치 버튼 클릭
+        document.getElementById('install-btn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                addLog('Showing install prompt...');
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                addLog(`User choice: ${outcome}`);
+                
+                if (outcome === 'accepted') {
+                    addLog('User accepted the install prompt');
+                } else {
+                    addLog('User dismissed the install prompt');
+                }
+                
+                deferredPrompt = null;
+                document.getElementById('install-btn').style.display = 'none';
+            }
+        });
+
+        // 캐시 초기화
+        document.getElementById('clear-cache-btn').addEventListener('click', async () => {
+            if ('caches' in window) {
+                try {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(cacheNames.map(name => caches.delete(name)));
+                    
+                    // Service Worker 등록 해제
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    await Promise.all(registrations.map(reg => reg.unregister()));
+                    
+                    addLog('Cache and Service Workers cleared');
+                    alert('캐시가 초기화되었습니다. 페이지를 새로고침합니다.');
+                    location.reload();
+                } catch (error) {
+                    addLog(`Cache clear error: ${error.message}`, 'error');
+                    alert('캐시 초기화 실패: ' + error.message);
+                }
+            }
+        });
+
+        // 리소스 체크 버튼
+        document.getElementById('check-resources-btn').addEventListener('click', checkResources);
+
+        // 페이지 로드 시 자동 체크
+        window.addEventListener('load', async () => {
+            addLog('Starting PWA diagnostics...');
+            
+            checkHTTPS();
+            await checkServiceWorker();
+            await checkManifest();
+            checkInstallStatus();
+            
+            // 설치 이벤트 리스너
+            window.addEventListener('appinstalled', () => {
+                addLog('App was installed successfully!');
+                checkInstallStatus();
+            });
+        });
+    </script>
+</body>
+</html>

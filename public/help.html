@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교회 헌금관리시스템 도움말</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lucide-static/font/Lucide.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4F46E5;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        html { scroll-behavior: smooth; }
+        .sidebar { position: sticky; top: 1rem; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <!-- 헤더 -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-8 mb-8 text-white">
+            <div class="flex items-center mb-4">
+                <svg class="w-10 h-10 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <div>
+                    <h1 class="text-3xl font-bold">교회 헌금관리시스템 도움말</h1>
+                    <p class="text-indigo-100 mt-2">체계적인 교회 재정 관리와 목회적 돌봄을 위한 완벽한 가이드</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-white/10 rounded-lg p-4">
+                    <h3 class="font-semibold">한인교회 특화</h3>
+                    <p class="text-sm text-indigo-100">한인교회 실정에 맞춘 시스템</p>
+                </div>
+                <div class="bg-white/10 rounded-lg p-4">
+                    <h3 class="font-semibold">안전한 데이터</h3>
+                    <p class="text-sm text-indigo-100">교회별 독립적 데이터 관리</p>
+                </div>
+                <div class="bg-white/10 rounded-lg p-4">
+                    <h3 class="font-semibold">목회적 활용</h3>
+                    <p class="text-sm text-indigo-100">데이터를 통한 목회적 돌봄</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- 좌측 네비게이션 -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sidebar">
+                    <h2 class="font-semibold text-gray-900 mb-4">목차</h2>
+                    <nav class="space-y-1">
+                        <a href="#intro" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">📚 시작하기</a>
+                        <a href="#install" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">💾 설치 및 접속</a>
+                        <a href="#dashboard" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">📊 대시보드</a>
+                        <a href="#members" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">👥 교인 관리</a>
+                        <a href="#donations" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">💰 헌금 관리</a>
+                        <a href="#reports" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">📈 보고서</a>
+                        <a href="#settings" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">⚙️ 설정</a>
+                        <a href="#pastoral" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">❤️ 목회적 활용</a>
+                        <a href="#faq" class="block px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-50">❓ FAQ</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- 메인 콘텐츠 -->
+            <div class="lg:col-span-3 space-y-8">
+                <!-- 시작하기 -->
+                <section id="intro" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">📚 시작하기</h2>
+                    
+                    <p class="text-lg mb-4">
+                        교회 헌금관리시스템은 한인교회의 효율적인 재정 관리와 교인 관리를 위해 특별히 설계된 
+                        종합 관리 솔루션입니다.
+                    </p>
+                    
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6">
+                        <p class="font-semibold text-blue-900 mb-2">💡 이 시스템으로 할 수 있는 일</p>
+                        <ul class="space-y-2 text-blue-800">
+                            <li>✓ 교인 정보를 체계적으로 관리</li>
+                            <li>✓ 헌금 내역을 정확하게 기록</li>
+                            <li>✓ 다양한 보고서로 교회 재정 현황 파악</li>
+                            <li>✓ 교인별 헌금 패턴 분석으로 목회적 돌봄</li>
+                            <li>✓ 연간 세금 보고를 위한 자료 준비</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-lg font-semibold mt-6 mb-3">주요 특징</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-semibold text-indigo-600 mb-2">🏢 교회별 독립 시스템</h4>
+                            <p class="text-sm">각 교회의 데이터는 완전히 분리되어 안전하게 관리됩니다.</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-semibold text-indigo-600 mb-2">📱 모바일 지원</h4>
+                            <p class="text-sm">스마트폰, 태블릿, 컴퓨터 모든 기기에서 사용 가능합니다.</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-semibold text-indigo-600 mb-2">🔒 보안</h4>
+                            <p class="text-sm">암호화된 연결과 자동 로그아웃으로 정보를 보호합니다.</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-semibold text-indigo-600 mb-2">📊 실시간 통계</h4>
+                            <p class="text-sm">대시보드에서 교회 현황을 한눈에 파악할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 설치 및 접속 -->
+                <section id="install" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">💾 설치 및 접속</h2>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">웹 브라우저로 접속하기</h3>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <ol class="space-y-3">
+                                    <li class="flex">
+                                        <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+                                        <div>
+                                            <p class="font-medium">웹 브라우저 열기</p>
+                                            <p class="text-sm text-gray-600">Chrome, Firefox, Safari, Edge 등 최신 브라우저 사용 권장</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex">
+                                        <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
+                                        <div>
+                                            <p class="font-medium">시스템 주소 입력</p>
+                                            <p class="text-sm text-gray-600">제공받은 URL을 주소창에 입력</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex">
+                                        <span class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+                                        <div>
+                                            <p class="font-medium">로그인</p>
+                                            <p class="text-sm text-gray-600">교회 로그인 ID와 패스워드 입력</p>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">모바일 앱처럼 설치하기 (PWA)</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="border rounded-lg p-4">
+                                    <h4 class="font-semibold mb-2">📱 iPhone/iPad</h4>
+                                    <ol class="text-sm space-y-1">
+                                        <li>1. Safari로 시스템 접속</li>
+                                        <li>2. 하단 공유 버튼 탭</li>
+                                        <li>3. "홈 화면에 추가" 선택</li>
+                                        <li>4. "추가" 탭</li>
+                                    </ol>
+                                </div>
+                                <div class="border rounded-lg p-4">
+                                    <h4 class="font-semibold mb-2">🤖 Android</h4>
+                                    <ol class="text-sm space-y-1">
+                                        <li>1. Chrome으로 시스템 접속</li>
+                                        <li>2. 우측 상단 메뉴(⋮) 탭</li>
+                                        <li>3. "홈 화면에 추가" 선택</li>
+                                        <li>4. "추가" 탭</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 대시보드 -->
+                <section id="dashboard" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">📊 대시보드</h2>
+
+                    <p class="text-gray-700 mb-4">
+                        대시보드는 교회의 현황을 한눈에 파악할 수 있는 종합 현황판입니다.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-blue-900 mb-2">📊 주요 통계 카드</h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li>• 이번 달 총 헌금액</li>
+                                <li>• 전월 대비 증감률</li>
+                                <li>• 등록 교인 수</li>
+                                <li>• 오늘의 헌금 현황</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-green-900 mb-2">📈 차트와 그래프</h4>
+                            <ul class="text-sm text-green-800 space-y-1">
+                                <li>• 월별 헌금 추이 그래프</li>
+                                <li>• 헌금 종류별 비율 차트</li>
+                                <li>• 최근 6개월 트렌드</li>
+                                <li>• 연간 성장 지표</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 교인 관리 -->
+                <section id="members" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">👥 교인 관리</h2>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">교인 등록하기</h3>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <ol class="space-y-2">
+                                    <li>✅ <strong>기본 정보 입력</strong> - 이름, 전화번호, 주소 등</li>
+                                    <li>✅ <strong>직분 선택</strong> - 목사, 장로, 권사, 집사 등</li>
+                                    <li>✅ <strong>직분 상태 설정</strong> - 시무, 은퇴, 협동 등</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 border-l-4 border-purple-500 p-4">
+                            <p class="font-semibold text-purple-900 mb-2">💡 목회 활용 팁</p>
+                            <p class="text-sm text-purple-800">
+                                교인 상세 페이지에서 헌금 내역을 확인하여 신앙생활의 변화를 파악하고, 
+                                필요한 목회적 돌봄을 제공할 수 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 헌금 관리 -->
+                <section id="donations" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">💰 헌금 관리</h2>
+
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-blue-900 mb-2">📝 일반 등록</h4>
+                                <ul class="text-sm text-blue-700 space-y-1">
+                                    <li>• 교인 선택 또는 비교인 입력</li>
+                                    <li>• 헌금 종류 선택</li>
+                                    <li>• 금액 입력</li>
+                                    <li>• 날짜 및 메모 추가</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-semibold text-green-900 mb-2">⚡ 빠른 등록</h4>
+                                <ul class="text-sm text-green-700 space-y-1">
+                                    <li>• 자주 사용하는 헌금 종류</li>
+                                    <li>• 간단한 입력 인터페이스</li>
+                                    <li>• 모바일 최적화</li>
+                                    <li>• 연속 입력 가능</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">헌금 종류</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                                <div class="bg-gray-100 rounded px-3 py-2 text-sm">✝️ 주정헌금</div>
+                                <div class="bg-gray-100 rounded px-3 py-2 text-sm">🙏 감사헌금</div>
+                                <div class="bg-gray-100 rounded px-3 py-2 text-sm">💰 십일조</div>
+                                <div class="bg-gray-100 rounded px-3 py-2 text-sm">🌍 선교헌금</div>
+                                <div class="bg-gray-100 rounded px-3 py-2 text-sm">🎄 절기헌금</div>
+                                <div class="bg-gray-100 rounded px-3 py-2 text-sm">🏗️ 건축헌금</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 보고서 -->
+                <section id="reports" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">📈 보고서</h2>
+
+                    <p class="text-gray-700 mb-4">
+                        다양한 보고서를 통해 교회 재정 현황을 정확히 파악하고 미래를 계획할 수 있습니다.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-semibold mb-2">📊 월별 보고서</h4>
+                            <p class="text-sm text-gray-600">매월 헌금 총액, 종류별 내역, 전월 대비 증감</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-semibold mb-2">📈 연간 보고서</h4>
+                            <p class="text-sm text-gray-600">연간 재정 흐름과 성장 추이 분석</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-semibold mb-2">👥 교인별 보고서</h4>
+                            <p class="text-sm text-gray-600">개별 교인의 헌금 내역과 패턴</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-semibold mb-2">🥧 헌금 종류별 분석</h4>
+                            <p class="text-sm text-gray-600">헌금 종류별 비율과 추이</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 설정 -->
+                <section id="settings" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">⚙️ 설정</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-medium mb-2">🏛️ 교회 정보</h4>
+                            <p class="text-sm text-gray-600">교회명, 주소, 연락처, 로고 관리</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-medium mb-2">💰 헌금 종류</h4>
+                            <p class="text-sm text-gray-600">교회 상황에 맞는 헌금 종류 설정</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-medium mb-2">👤 직분 관리</h4>
+                            <p class="text-sm text-gray-600">교회 조직에 맞는 직분 설정</p>
+                        </div>
+                        <div class="border rounded-lg p-4">
+                            <h4 class="font-medium mb-2">🔐 보안 설정</h4>
+                            <p class="text-sm text-gray-600">패스워드 변경 및 접근 권한</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 목회적 활용 -->
+                <section id="pastoral" class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg shadow-sm border border-purple-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">❤️ 목회적 활용 방안</h2>
+
+                    <div class="bg-white rounded-lg p-4 mb-6">
+                        <h3 class="text-lg font-semibold mb-3">
+                            💡 이 시스템은 단순한 헌금 기록을 넘어 목회적 돌봄의 도구로 활용될 수 있습니다
+                        </h3>
+                        <p class="text-gray-700">
+                            데이터는 차가운 숫자가 아니라 교인들의 신앙 여정을 보여주는 따뜻한 이야기입니다.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-semibold text-purple-900 mb-2">🙏 신앙 여정 이해</h4>
+                            <p class="text-sm text-gray-700">
+                                개인내역 보고서를 통해 교인의 신앙생활 패턴과 변화를 이해
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-semibold text-purple-900 mb-2">💝 목회적 관심</h4>
+                            <p class="text-sm text-gray-700">
+                                헌금 패턴 변화를 통해 적절한 목회적 돌봄 제공
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-semibold text-purple-900 mb-2">📈 교회 성장 분석</h4>
+                            <p class="text-sm text-gray-700">
+                                연간 보고서로 교회의 성장과 변화 분석
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-semibold text-purple-900 mb-2">📅 효과적인 계획</h4>
+                            <p class="text-sm text-gray-700">
+                                헌금 추이 파악으로 사역과 재정 계획 수립
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-100 rounded-lg p-4 mt-6">
+                        <p class="text-purple-900 italic">
+                            "다양한 보고서와 통계 기능은 교인들의 삶을 더 깊이 이해하고, 
+                            교회 공동체를 더 건강하게 세워가는 데 도움이 됩니다."
+                        </p>
+                    </div>
+                </section>
+
+                <!-- FAQ -->
+                <section id="faq" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">❓ 자주 묻는 질문</h2>
+
+                    <div class="space-y-4">
+                        <details class="border rounded-lg">
+                            <summary class="px-4 py-3 font-medium cursor-pointer hover:bg-gray-50">
+                                데이터는 안전한가요?
+                            </summary>
+                            <div class="px-4 py-3 border-t bg-gray-50">
+                                <p class="text-sm text-gray-700">
+                                    네, 모든 데이터는 암호화되어 저장되며, 각 교회의 데이터는 완전히 분리되어 관리됩니다.
+                                </p>
+                            </div>
+                        </details>
+
+                        <details class="border rounded-lg">
+                            <summary class="px-4 py-3 font-medium cursor-pointer hover:bg-gray-50">
+                                여러 명이 동시에 사용할 수 있나요?
+                            </summary>
+                            <div class="px-4 py-3 border-t bg-gray-50">
+                                <p class="text-sm text-gray-700">
+                                    네, 여러 관리자가 동시에 접속하여 작업할 수 있으며, 실시간으로 데이터가 동기화됩니다.
+                                </p>
+                            </div>
+                        </details>
+
+                        <details class="border rounded-lg">
+                            <summary class="px-4 py-3 font-medium cursor-pointer hover:bg-gray-50">
+                                모바일에서도 사용할 수 있나요?
+                            </summary>
+                            <div class="px-4 py-3 border-t bg-gray-50">
+                                <p class="text-sm text-gray-700">
+                                    네, 스마트폰, 태블릿 등 모든 기기에서 사용 가능합니다.
+                                </p>
+                            </div>
+                        </details>
+
+                        <details class="border rounded-lg">
+                            <summary class="px-4 py-3 font-medium cursor-pointer hover:bg-gray-50">
+                                연말 정산용 자료를 출력할 수 있나요?
+                            </summary>
+                            <div class="px-4 py-3 border-t bg-gray-50">
+                                <p class="text-sm text-gray-700">
+                                    네, 교인별 연간 헌금 내역서를 생성하여 출력하거나 PDF로 저장할 수 있습니다.
+                                </p>
+                            </div>
+                        </details>
+                    </div>
+                </section>
+
+                <!-- 지원 정보 -->
+                <section class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white">
+                    <h2 class="text-2xl font-bold mb-4">도움이 필요하신가요?</h2>
+                    <p class="mb-6">
+                        시스템 사용 중 문제가 발생하거나 추가 도움이 필요하시면 언제든지 연락주세요.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-sm text-indigo-100">전화 문의</p>
+                            <p class="font-semibold">1588-0000</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-indigo-100">이메일</p>
+                            <p class="font-semibold">support@church.com</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-indigo-100">카카오톡</p>
+                            <p class="font-semibold">@교회시스템</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 버전 정보 -->
+                <div class="text-center text-sm text-gray-500 mt-8">
+                    <p>교회 헌금관리시스템 v1.0.0 | 한인 디아스포라 네트워크</p>
+                    <p class="mt-1">© 2025 Church Donation Management System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
